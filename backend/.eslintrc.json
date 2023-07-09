@@ -10,6 +10,8 @@
   },
   "rules": {
     "no-console": "off",
+    "spaced-comment": "off",
+    "class-methods-use-this": "off",
     "no-restricted-syntax": [
       "error",
       {
