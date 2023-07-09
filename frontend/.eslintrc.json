@@ -18,6 +18,8 @@
   "plugins": ["react", "import"],
   "rules": {
     "no-console": "off",
+    "class-methods-use-this": "off",
+    "import/no-unresolved": "off",
     "no-restricted-syntax": [
       "error",
       {
@@ -47,6 +49,7 @@
           "@assets": "./src/assets",
           "@components": "./src/components",
           "@pages": "./src/pages",
+          "@contexts": "./src/contexts",
           "@services": "./src/services"
         },
         "extensions": [".js", ".jsx"]
