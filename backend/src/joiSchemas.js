@@ -13,7 +13,7 @@ const schemaRegister = Joi.object({
       /^(?=.*?[A-Z])(?=(.*[a-z]){1,})(?=(.*[\d]){1,})(?=(.*[\W]){1,})(?!.*\s).{8,}$/
     )
     .min(8)
-    .max(64)
+    .max(255)
     .required(),
 });
 
@@ -24,7 +24,7 @@ const schemaLoginNickname = Joi.object({
       /^(?=.*?[A-Z])(?=(.*[a-z]){1,})(?=(.*[\d]){1,})(?=(.*[\W]){1,})(?!.*\s).{8,}$/
     )
     .min(8)
-    .max(64)
+    .max(255)
     .required(),
 });
 
@@ -40,7 +40,7 @@ const schemaLoginEmail = Joi.object({
       /^(?=.*?[A-Z])(?=(.*[a-z]){1,})(?=(.*[\d]){1,})(?=(.*[\W]){1,})(?!.*\s).{8,}$/
     )
     .min(8)
-    .max(64)
+    .max(255)
     .required(),
 });
 

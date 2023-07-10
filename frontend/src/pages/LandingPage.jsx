@@ -1,6 +1,7 @@
 import { useReducer, useContext } from "react";
-import { Navigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import UserContext from "@contexts/UserContext";
+import CreateAccount from "@components/CreateAccount/Index";
 import axios from "@services/axios";
 import style from "@pages/LandingPage.module.scss";
 import { schemaLoginNickname, schemaLoginEmail } from "../joiSchemas";
@@ -33,6 +34,7 @@ const loginForm = (state, action) => {
 function LandingPage() {
   const [formData, dispatch] = useReducer(loginForm, initialState);
   const { setUser } = useContext(UserContext);
+  const navigate = useNavigate();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -61,7 +63,7 @@ function LandingPage() {
 
       setUser(userData[0]);
       dispatch({ type: "RESET_FORM" });
-      return Navigate("/");
+      return navigate("/");
     } catch (err) {
       if (!err.code) {
         return alert(`Validation error: ${err?.details[0].message}`);
@@ -76,11 +78,12 @@ function LandingPage() {
   return (
     <section className={style.section_login}>
       <h2>Welcome to Synth Scribe</h2>
+      <CreateAccount />
       <form onSubmit={handleSubmit}>
         <input
           type="text"
           name="credentials"
-          placeholder="Your nickname here..."
+          placeholder="Your nickname/email here..."
           value={formData.credentials}
           onChange={(e) =>
             dispatch({ type: "updateCredentials", payload: e.target.value })
