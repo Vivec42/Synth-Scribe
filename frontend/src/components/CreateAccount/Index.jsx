@@ -4,7 +4,7 @@ import UserContext from "@contexts/UserContext";
 import axios from "@services/axios";
 import style from "./Index.module.scss";
 
-const initialState = {
+const registerInitialState = {
   nickname: "",
   email: "",
   password: "",
@@ -16,7 +16,7 @@ const createAccountForm = (state, action) => {
       return { ...state, nickname: action.payload };
     case "insertEmail":
       return { ...state, email: action.payload };
-    case "insertPasword":
+    case "insertPassword":
       return { ...state, password: action.payload };
 
     default:
@@ -25,7 +25,10 @@ const createAccountForm = (state, action) => {
 };
 
 function CreateAccount() {
-  const [formData, dispatch] = useReducer(createAccountForm, initialState);
+  const [formData, dispatch] = useReducer(
+    createAccountForm,
+    registerInitialState
+  );
   const { setUser } = useContext(UserContext);
   const navigate = useNavigate();
 
@@ -41,24 +44,18 @@ function CreateAccount() {
     }
 
     try {
-      const createUser = await axios
-        .post("users/login", formData)
-        .then((res) => res.json())
-        .then(() => {
-          // setNickname("");
-          // setEmail("");
-          // setPassword("");
-          // setRegistering(false);
-          alert("Your account has been created");
-          navigate(`/login`);
+      const createUserData = await axios
+        .post("users/login", formData, {
+          withCredentials: true,
         })
+        .then((response) => response.data)
         .catch(() => {
           alert("Error to create your account, please try again!!!");
         });
 
-      setUser(createUser[0]);
+      setUser(createUserData[0]);
       dispatch({ type: "RESET_FORM" });
-      return navigate("/");
+      return navigate("/login");
     } catch (err) {
       if (!err.code) {
         return alert(`Validation error: ${err?.details[0].message}`);

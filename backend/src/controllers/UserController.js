@@ -93,6 +93,14 @@ class UserController {
         return res.status(403).send("This emailed is already registred");
       }
 
+      const nicknameAlreadyExist = await models.user
+        .findByNickname(user.nickname)
+        .then((result) => result[0]);
+
+      if (nicknameAlreadyExist.length !== 0) {
+        return res.status(403).send("This nickname is already registred");
+      }
+
       const hashedPassword = await hashPassword(user.password);
       delete user.password;
 

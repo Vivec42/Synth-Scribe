@@ -14,7 +14,7 @@ const determineCredentials = (credentials) => {
   return "nickname";
 };
 
-const initialState = {
+const loginInitialState = {
   credentials: "",
   password: "",
 };
@@ -32,7 +32,7 @@ const loginForm = (state, action) => {
 };
 
 function LandingPage() {
-  const [formData, dispatch] = useReducer(loginForm, initialState);
+  const [formData, dispatch] = useReducer(loginForm, loginInitialState);
   const { setUser } = useContext(UserContext);
   const navigate = useNavigate();
 
@@ -42,6 +42,7 @@ function LandingPage() {
     if (formData.credentials === "" || formData.password === "") {
       return alert("Please fill the form !");
     }
+
     try {
       const credentialType = determineCredentials(formData.credentials);
       const validData =
