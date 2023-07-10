@@ -45,7 +45,7 @@ function CreateAccount() {
 
     try {
       const createUserData = await axios
-        .post("users/login", formData, {
+        .post("users/register", formData, {
           withCredentials: true,
         })
         .then((response) => response.data)
