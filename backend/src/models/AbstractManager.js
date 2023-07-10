@@ -1,5 +1,6 @@
 class AbstractManager {
-  constructor({ table }) {
+  constructor(connection, table) {
+    this.connection = connection;
     this.table = table;
   }
 

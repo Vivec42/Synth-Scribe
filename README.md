@@ -1,7 +1,28 @@
 ## Concept
 
-This template is meant to serve as a foundation for every P2/P3 following the React-Express-MySQL stack, as learned in Wild Code School.
-It's pre-configured with a set of tools which'll help students produce industry-quality and easier-to-maintain code, while staying as simple as possible to use.
+The concept of this app is primarily designed as a learning exercise where I aim to enhance my skills. To achieve this, I have chosen to combine some functionalities inspired by Twitter and Discord. However, it's important to note that I haven't included all the features from both platforms, as that would require an extensive amount of work and knowledge to implement.
+
+Instead, I have selected fundamental features from Twitter and Discord, which include:
+
+- User Registration and Authentication: Users can create an account and log in to access the app's features.
+
+- Post System: Similar to Twitter, users can create posts to share their thoughts, updates, or engage with others.
+
+- Instant Messaging: The app provides an instantaneous chat system that enables users to communicate with each other in real-time, resembling the chat functionality in Discord.
+
+- Admin System: Administrators have special privileges to remove posts and ban users when necessary to maintain the platform's integrity.
+
+- Threads: Users can participate in threads created by administrators, allowing them to engage in discussions and contribute to specific topics.
+
+- Support System: Users have access to a support system where they can report bugs, provide feedback, or seek assistance.
+
+By combining these selected features, I aim to create a learning environment that allows me to gain hands-on experience in developing various aspects of a social media/chat application. While the app may not include the complete range of features found in Twitter or Discord, it serves as a platform for me to acquire valuable skills and knowledge in building and implementing core functionalities.
+
+## Outside Link
+
+Mock up on figma: https://www.figma.com/file/sGgZ4zdIyxHTXl7HgNgFMS/Synth-Scribe?type=design&node-id=0%3A1&mode=design&t=6eiSSZVRQNuD4EJQ-1
+
+MLP on draw.io (you need to download and use it on draw.io) : https://drive.google.com/file/d/1fsJHr-6812NnjaoE6jXYIcheW_v_344W/view?usp=sharing
 
 ## Setup & Use
 
@@ -22,23 +43,8 @@ It's pre-configured with a set of tools which'll help students produce industry-
 - `lint` : Runs validation tools, and refuses unclean code (will be executed on every _commit_)
 - `fix` : Fixes linter errors (run it if `lint` growls on your code !)
 
-## FAQ
+## Tools & Languages
 
-### Tools
-
-- _Concurrently_ : Allows for several commands to run concurrently in the same CLI
-- _Husky_ : Allows to execute specific commands that trigger on _git_ events
-- _Vite_ : Alternative to _Create-React-App_, packaging less tools for a more fluid experience
-- _ESLint_ : "Quality of code" tool, ensures chosen rules will be enforced
-- _Prettier_ : "Quality of code" tool as well, focuses on the styleguide
-- _ Airbnb Standard_ : One of the most known "standards", even though it's not officially linked to ES/JS
-- _Nodemon_ : Allows to restart the server everytime a .js file is udated
-
-### Deployment
-
-For deployment, you have to go to `secrets` → app `actions` on the github repo to insert via `New repository secret` :
-
-- CAPROVER_BACK_APPNAME : name app on caprover
-- CAPROVER_FRONT_APPNAME : name app on caprover
-- CAPROVER_PASSWORD : password caprover
-- CAPROVER_SERVER : link of domain
+- IDE: Visual Studio Code
+- Framework/Library: React, Express
+- Languages: HTML, CSS, Javascript and SQL
