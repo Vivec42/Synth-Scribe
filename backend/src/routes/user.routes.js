@@ -7,7 +7,7 @@ const { UserController } = require("../controllers");
 // router.get("/", userControllers.browse);
 // router.get("/:id", userControllers.read);
 // router.put("/:id", userControllers.edit);
-router.post("/", UserController.register);
+router.post("/login", UserController.register);
 router.post("/login", UserController.login);
 // router.delete("/:id", userControllers.destroy);
 
