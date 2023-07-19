@@ -1,36 +1,64 @@
-import { useState, useMemo } from "react";
-import UserContext from "@contexts/UserContext";
-import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { useState, useMemo, useEffect } from "react";
+import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
+import axios from "axios";
 
+import UserContext from "@contexts/UserContext";
 import LandingPage from "@pages/LandingPage";
+import HomePage from "@pages/HomePage";
+import Footer from "@components/Footer/Index";
+import synthBG from "@assets/videos/synth_bg.mp4";
 import "./App.scss";
+import "@assets/fonts/BTTF.ttf";
+import "@assets/fonts/zekton.otf";
 
 function App() {
-  const [user, setUser] = useState();
+  const [user, setUser] = useState({});
 
-  const userContextValue = useMemo(() => ({ user, setUser }), [user, setUser]);
+  const checkConnection = async () => {
+    try {
+      const data = await axios
+        .get(`${import.meta.env.VITE_BACKEND_URL}users/refreshToken`, {
+          withCredentials: true,
+        })
+        .then((result) => result.data);
+      return setUser(data);
+    } catch (err) {
+      return alert(err.data, "error");
+    }
+  };
+
+  useEffect(() => {
+    checkConnection();
+  }, []);
 
   return (
-    <div className="App">
-      <UserContext.Provider value={userContextValue}>
+    <main className="App">
+      <video autoPlay muted loop disablePictureInPicture className="synth-bg">
+        <source src={synthBG} type="video/mp4" />
+      </video>
+
+      <UserContext.Provider
+        value={useMemo(() => ({ user, setUser }), [user, setUser])}
+      >
         <BrowserRouter>
           <Routes>
             <Route
-              path="/"
-              element={
-                user ? (
-                  <h1>
-                    You're connected as : {user.nickname} {user.role}
-                  </h1>
-                ) : (
-                  <LandingPage />
-                )
-              }
+              path="/login"
+              element={!user?.id ? <LandingPage /> : <Navigate to="/" />}
             />
+            <Route
+              path="/"
+              element={!user?.id ? <Navigate to="/login" /> : <HomePage />}
+            />
+            {/* {user?.role === "ADMIN" && <Route
+              path="/admin"
+              element={<AdminPage />}
+            />} */}
           </Routes>
         </BrowserRouter>
       </UserContext.Provider>
-    </div>
+      <Footer />
+    </main>
   );
 }
 

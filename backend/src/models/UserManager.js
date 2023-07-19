@@ -8,9 +8,36 @@ const {
 class UserManager extends AbstractManager {
   static table = "user";
 
+  banUser(id, value) {
+    return this.connection.query(
+      `UPDATE  ${this.table} SET banned = ? WHERE id = ?`,
+      [value, id]
+    );
+  }
+
   isUserBanned(id) {
     return this.connection.query(
-      `SELECT id, banned FROM ${this.table} WHERE id = ?`,
+      `SELECT id, nickname, banned FROM ${this.table} WHERE id = ?`,
+      [id]
+    );
+  }
+
+  findAll() {
+    return this.connection.query(
+      `SELECT nickname, profilePicture, profileBanner, description, language, country, city, registeredDate, banned FROM  ${this.table}`
+    );
+  }
+
+  find(id) {
+    return this.connection.query(
+      `SELECT nickname, profilePicture, profileBanner, description, language, country, city, registeredDate, id, role  FROM  ${this.table} WHERE id = ?`,
+      [id]
+    );
+  }
+
+  getUserRole(id) {
+    return this.connection.query(
+      `SELECT role FROM ${this.table} WHERE id = ?`,
       [id]
     );
   }
@@ -41,16 +68,22 @@ class UserManager extends AbstractManager {
     );
   }
 
-  insert(user) {
+  insertUser(user) {
     return this.connection.query(
       `INSERT INTO ${this.table} (nickname, email, hashedPassword) VALUES (?, ?, ?)`,
       [user.nickname, user.email, user.hashedPassword]
     );
   }
 
-  update(user) {
+  updateUser(user) {
     return this.connection.query(`UPDATE ${this.table} SET ? WHERE id = ?`, [
       user,
+    ]);
+  }
+
+  delete(id) {
+    return this.connection.query(`DELETE FROM ${this.table} WHERE id = ?`, [
+      id,
     ]);
   }
 
