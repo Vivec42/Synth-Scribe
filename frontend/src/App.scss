@@ -4,6 +4,32 @@
   box-sizing: border-box;
 }
 
-body {
-  background-color: rgb(64, 64, 64);
+.App {
+  .synth-bg {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    z-index: -1;
+  }
+}
+
+.vivaldi-picture-in-picture-container {
+  display: none;
+}
+
+@font-face {
+  font-family: "BTTF";
+  src:
+    local("BTTF"),
+    url("./assets/fonts/BTTF.ttf") format("truetype");
+}
+
+@font-face {
+  font-family: "Zekton";
+  src:
+    local("zekton"),
+    url("./assets/fonts/zekton.otf") format("truetype");
 }

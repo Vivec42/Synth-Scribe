@@ -22,7 +22,7 @@ By combining these selected features, I aim to create a learning environment tha
 
 Mock up on figma: https://www.figma.com/file/sGgZ4zdIyxHTXl7HgNgFMS/Synth-Scribe?type=design&node-id=0%3A1&mode=design&t=6eiSSZVRQNuD4EJQ-1
 
-MLP on draw.io (you need to download and use it on draw.io) : https://drive.google.com/file/d/1fsJHr-6812NnjaoE6jXYIcheW_v_344W/view?usp=sharing
+MLP on draw.io: https://drive.google.com/file/d/1fsJHr-6812NnjaoE6jXYIcheW_v_344W/view?usp=sharing
 
 ## Setup & Use
 

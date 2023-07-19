@@ -21,34 +21,86 @@ const determineCredentials = (credentials) => {
   return "nickname";
 };
 
-class UserController {
-  // static browse = (req, res) => {
-  //   models.item
-  //     .findAll()
-  //     .then(([rows]) => {
-  //       res.send(rows);
-  //     })
-  //     .catch((err) => {
-  //       console.error(err);
-  //       res.sendStatus(500);
-  //     });
-  // };
+const checkUserExists = async (id) => {
+  const checkUserExistence = await models.user
+    .find(id)
+    .then((result) => result[0]);
 
-  // static read = (req, res) => {
-  //   models.item
-  //     .find(req.params.id)
-  //     .then(([rows]) => {
-  //       if (rows[0] == null) {
-  //         res.sendStatus(404);
-  //       } else {
-  //         res.send(rows[0]);
-  //       }
-  //     })
-  //     .catch((err) => {
-  //       console.error(err);
-  //       res.sendStatus(500);
-  //     });
-  // };
+  if (!checkUserExistence.length) {
+    return false;
+  }
+  return true;
+};
+
+class UserController {
+  static browseUsers = async (req, res) => {
+    // const { id, role } = req.body;
+
+    // const checkUserExistence = await models.user
+    //   .find(id, role)
+    //   .then((result) => result[0]);
+
+    // const isBanned = await models.user
+    //   .isUserBanned()
+    //   .then((result) => result[0]);
+
+    // if (checkUserExistence) {
+    //   return res.status(403).send("Register to access this !");
+    // }
+    // if (isBanned) {
+    //   return res.status(403).send("You are banned from this site !");
+    // }
+
+    try {
+      return await models.user
+        .findAll()
+        .then(([usersList]) => {
+          res.status(200).send(usersList);
+        })
+        .catch((err) => {
+          console.error(err);
+          res.sendStatus(500);
+        });
+    } catch (err) {
+      //prod.liveshare.vsengsaas.visualstudio.com/join?03F645A657813B2D4CB88FF1EA9B48A59465
+      return res.status(500).send(err.message);
+    }
+  };
+
+  /*-------------------------------------------------------- */
+  /*-------------------------------------------------------- */
+
+  static findUser = async (req, res) => {
+    // const { role } = req.body;
+
+    // const checkUserExistence = await models.user
+    //   .find(req.params.id, role)
+    //   .then((result) => result[0]);
+
+    // if (!checkUserExistence) {
+    //   return res.status(403).send("Register to access this !");
+    // }
+    // if (!checkUserExistence.length) {
+    //   return res.status(404).send("This user doesn't exist !");
+    // }
+
+    try {
+      return await models.user
+        .find(req.params.id)
+        .then(([userData]) => {
+          res.status(200).send(userData);
+        })
+        .catch((err) => {
+          console.error(err);
+          res.sendStatus(500);
+        });
+    } catch (err) {
+      return res.status(500).send(err.message);
+    }
+  };
+
+  /*-------------------------------------------------------- */
+  /*-------------------------------------------------------- */
 
   // static edit = (req, res) => {
   //   const item = req.body;
@@ -105,7 +157,7 @@ class UserController {
       delete user.password;
 
       return await models.user
-        .insert({ ...user, hashedPassword })
+        .insertUser({ ...user, hashedPassword })
         .then(([result]) => {
           return res
             .location("/login")
@@ -159,8 +211,6 @@ class UserController {
         return res.sendStatus(403);
       }
 
-      delete userData[0].hashedPassword;
-
       const token = jwt.sign(
         {
           id: userData[0].id,
@@ -170,6 +220,7 @@ class UserController {
         process.env.JWT_SECRET,
         { expiresIn: process.env.JWT_EXPIRESIN }
       );
+      delete userData[0].hashedPassword;
       return res
         .cookie("accessToken", token, {
           httpOnly: true,
@@ -186,21 +237,54 @@ class UserController {
   /*-------------------------------------------------------- */
   /*-------------------------------------------------------- */
 
-  // static destroy = (req, res) => {
-  //   models.item
-  //     .delete(req.params.id)
-  //     .then(([result]) => {
-  //       if (result.affectedRows === 0) {
-  //         res.sendStatus(404);
-  //       } else {
-  //         res.sendStatus(204);
-  //       }
-  //     })
-  //     .catch((err) => {
-  //       console.error(err);
-  //       res.sendStatus(500);
-  //     });
-  // };
+  static banUser = async (req, res) => {
+    const { id } = req.params;
+    try {
+      const userExists = await checkUserExists(id);
+      if (!userExists) {
+        return res.status(404).send("This user doesn't exist");
+      }
+
+      const [[bannedStatus]] = await models.user.isUserBanned(id);
+      const [toggleBan] = await models.user.banUser(id, !bannedStatus.banned);
+
+      if (toggleBan.changedRows === 0) {
+        return res.status(400).send("Banned status not updated !");
+      }
+
+      return res
+        .status(200)
+        .send(
+          `The user ${bannedStatus.nickname} has been ${
+            !bannedStatus.banned ? "banned" : "unbanned"
+          }`
+        );
+    } catch (err) {
+      return res.status(500).send(err.message);
+    }
+  };
+
+  /*-------------------------------------------------------- */
+  /*-------------------------------------------------------- */
+
+  static deleteUser = async (req, res) => {
+    const { id } = req.params;
+
+    try {
+      const userExists = await checkUserExists(id);
+      if (!userExists) {
+        return res
+          .status(404)
+          .send("This user doesn't exist or is already deleted !");
+      }
+
+      return models.user.delete(req.params.id).then(() => {
+        res.sendStatus(204);
+      });
+    } catch (err) {
+      return res.status(500).send(err.message);
+    }
+  };
 }
 
 module.exports = UserController;
