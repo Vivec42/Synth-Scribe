@@ -1,4 +1,4 @@
-import { useReducer, useContext } from "react";
+import { useReducer, useContext, useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import UserContext from "@contexts/UserContext";
 import CreateAccount from "@components/CreateAccount/Index";
@@ -32,9 +32,28 @@ const loginForm = (state, action) => {
 };
 
 function LandingPage() {
+  const [registering, setRegistering] = useState(false);
+  const [actualClass, setActualClass] = useState("visible");
   const [formData, dispatch] = useReducer(loginForm, loginInitialState);
   const { setUser } = useContext(UserContext);
   const navigate = useNavigate();
+
+  const toggleForms = async () => {
+    if (registering) {
+      setActualClass("visible");
+      setRegistering(false);
+    } else {
+      setActualClass("hidden");
+      setRegistering(true);
+    }
+    // await setRegistering(!registering);
+  };
+
+  useEffect(() => {
+    if (!registering) {
+      setActualClass("visible");
+    }
+  }, [registering]);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -53,16 +72,16 @@ function LandingPage() {
         return alert("Please fill the form or review your credentials !");
       }
 
-      const userData = await axios
+      const fetchedUserData = await axios
         .post("users/login", formData, {
           withCredentials: true,
         })
         .then((response) => response.data);
-      if (!userData) {
+      if (!fetchedUserData) {
         return alert("Error retrieving user data");
       }
 
-      setUser(userData[0]);
+      setUser(fetchedUserData[0]);
       dispatch({ type: "RESET_FORM" });
       return navigate("/");
     } catch (err) {
@@ -77,36 +96,46 @@ function LandingPage() {
   };
 
   return (
-    <section className={style.section_login}>
-      <h2>Welcome to Synth Scribe</h2>
-      <CreateAccount />
-      <form onSubmit={handleSubmit}>
-        <input
-          type="text"
-          name="credentials"
-          placeholder="Your nickname/email here..."
-          value={formData.credentials}
-          onChange={(e) =>
-            dispatch({ type: "updateCredentials", payload: e.target.value })
-          }
-          required
-        />
-        <input
-          type="password"
-          name="password"
-          placeholder="Your password here..."
-          value={formData.password}
-          onChange={(e) =>
-            dispatch({ type: "updatePassword", payload: e.target.value })
-          }
-          required
-        />
-        <button type="submit">Sign in</button>
-        <span>
-          <p>No account ?</p>
-          <button type="button">Create one here !</button>
-        </span>
-      </form>
+    <section className={style.landing_page}>
+      <h1>
+        Welcome to <br /> {">"} Synth Scribe
+      </h1>
+      <CreateAccount
+        registering={registering}
+        setRegistering={setRegistering}
+      />
+      <span className={`${style.box} ${style[actualClass]}`}>
+        <form className={style.form_login} onSubmit={handleSubmit}>
+          <input
+            type="text"
+            name="credentials"
+            placeholder="Your nickname/email here..."
+            value={formData.credentials}
+            onChange={(e) =>
+              dispatch({ type: "updateCredentials", payload: e.target.value })
+            }
+            required
+          />
+          <input
+            type="password"
+            name="password"
+            placeholder="Your password here..."
+            value={formData.password}
+            onChange={(e) =>
+              dispatch({ type: "updatePassword", payload: e.target.value })
+            }
+            required
+          />
+          <button type="submit">Log In</button>
+          <hr />
+          <span>
+            <p>No account ?</p>
+            <button type="button" onClick={toggleForms}>
+              Create one here !
+            </button>
+          </span>
+        </form>
+      </span>
     </section>
   );
 }

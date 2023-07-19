@@ -1,7 +1,8 @@
-import { useReducer, useContext } from "react";
+import { useReducer, useContext, useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import UserContext from "@contexts/UserContext";
 import axios from "@services/axios";
+import PropTypes from "prop-types";
 import style from "./Index.module.scss";
 
 const registerInitialState = {
@@ -24,13 +25,31 @@ const createAccountForm = (state, action) => {
   }
 };
 
-function CreateAccount() {
+function CreateAccount({ registering, setRegistering }) {
+  const [actualClass, setActualClass] = useState("hidden");
   const [formData, dispatch] = useReducer(
     createAccountForm,
     registerInitialState
   );
   const { setUser } = useContext(UserContext);
   const navigate = useNavigate();
+
+  const toggleForms = () => {
+    if (!registering) {
+      setActualClass("visible");
+      setRegistering(true);
+    } else {
+      setActualClass("hidden");
+      setRegistering(false);
+    }
+    // await setRegistering(registering);
+  };
+
+  useEffect(() => {
+    if (registering) {
+      setActualClass("visible");
+    }
+  }, [registering]);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -68,41 +87,53 @@ function CreateAccount() {
   };
 
   return (
-    <form className={style.form_create_account} onSubmit={handleSubmit}>
-      <input
-        type="text"
-        name="nickname"
-        placeholder="Your nickname here..."
-        value={formData.nickname}
-        onChange={(e) =>
-          dispatch({ type: "insertNickname", payload: e.target.value })
-        }
-        required
-      />
-      <input
-        type="email"
-        name="email"
-        placeholder="Your email here..."
-        value={formData.email}
-        onChange={(e) =>
-          dispatch({ type: "insertEmail", payload: e.target.value })
-        }
-        required
-      />
-      <input
-        type="password"
-        name="password"
-        placeholder="Your password here..."
-        value={formData.password}
-        onChange={(e) =>
-          dispatch({ type: "insertPassword", payload: e.target.value })
-        }
-        required
-      />
-      <button type="submit">Create</button>
-      <button type="button">Cancel</button>
-    </form>
+    <span className={`${style.box} ${style[actualClass]}`}>
+      <form className={style.form_create_account} onSubmit={handleSubmit}>
+        <input
+          type="text"
+          name="nickname"
+          placeholder="Your nickname here..."
+          value={formData.nickname}
+          onChange={(e) =>
+            dispatch({ type: "insertNickname", payload: e.target.value })
+          }
+          required
+        />
+        <input
+          type="email"
+          name="email"
+          placeholder="Your email here..."
+          value={formData.email}
+          onChange={(e) =>
+            dispatch({ type: "insertEmail", payload: e.target.value })
+          }
+          required
+        />
+        <input
+          type="password"
+          name="password"
+          placeholder="Your password here..."
+          value={formData.password}
+          onChange={(e) =>
+            dispatch({ type: "insertPassword", payload: e.target.value })
+          }
+          required
+        />
+        <hr />
+        <span>
+          <button type="submit">Create</button>
+          <button type="button" onClick={toggleForms}>
+            Cancel
+          </button>
+        </span>
+      </form>
+    </span>
   );
 }
 
 export default CreateAccount;
+
+CreateAccount.propTypes = {
+  registering: PropTypes.bool.isRequired,
+  setRegistering: PropTypes.func.isRequired,
+};

@@ -2,13 +2,35 @@ const express = require("express");
 
 const router = express.Router();
 
-const { UserController } = require("../controllers");
+const { UserController, AuthController } = require("../controllers");
 
-// router.get("/", userControllers.browse);
-// router.get("/:id", userControllers.read);
-// router.put("/:id", userControllers.edit);
+router.get(
+  "/",
+  AuthController.isUserConnected,
+  AuthController.isUserModo,
+  UserController.browseUsers
+);
+router.get("/refreshToken", AuthController.refreshToken);
+router.get(
+  "/:id",
+  AuthController.isUserConnected,
+  AuthController.isUserAllowedToGet,
+  UserController.findUser
+);
+// router.put("/:id", UserController.edit);
 router.post("/register", UserController.register);
 router.post("/login", UserController.login);
-// router.delete("/:id", userControllers.destroy);
+router.put(
+  "/ban/:id",
+  AuthController.isUserConnected,
+  AuthController.isUserModo,
+  UserController.banUser
+);
+router.delete(
+  "/:id",
+  AuthController.isUserConnected,
+  AuthController.isUserAdmin,
+  UserController.deleteUser
+);
 
 module.exports = router;
