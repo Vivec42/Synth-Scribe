@@ -46,7 +46,6 @@ function LandingPage() {
       setActualClass("hidden");
       setRegistering(true);
     }
-    // await setRegistering(!registering);
   };
 
   useEffect(() => {

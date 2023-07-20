@@ -5,6 +5,7 @@ import axios from "axios";
 import UserContext from "@contexts/UserContext";
 import LandingPage from "@pages/LandingPage";
 import HomePage from "@pages/HomePage";
+import Header from "@components/Header/Index";
 import Footer from "@components/Footer/Index";
 import synthBG from "@assets/videos/synth_bg.mp4";
 import "./App.scss";
@@ -41,6 +42,7 @@ function App() {
         value={useMemo(() => ({ user, setUser }), [user, setUser])}
       >
         <BrowserRouter>
+          {user.id && <Header />}
           <Routes>
             <Route
               path="/login"

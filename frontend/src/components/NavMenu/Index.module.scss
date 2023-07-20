@@ -1,0 +1,112 @@
+.nav_box {
+  position: fixed;
+  width: 100%;
+
+  .nav {
+    position: absolute;
+    right: 0;
+    width: 70%;
+    max-width: 270px;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    padding: 2rem;
+    border-radius: 0 0 0 80px;
+    background-color: #0000008a;
+    backdrop-filter: blur(5px);
+    -webkit-box-shadow: -7px 8px 15px 0px #ffffff;
+    box-shadow:
+      0 0 0.2rem #fff,
+      0 0 0.2rem #fff,
+      0 0 2rem #13dbfe,
+      0 0 0.8rem #13dbfe,
+      0 0 2.8rem #13dbfe;
+    border-width: 0 0 2px 2px;
+    border-style: none none solid solid;
+    border-color: rgb(255, 255, 255) rgb(255, 255, 255) rgb(255, 255, 255)
+      rgb(255, 255, 255);
+    transition: 0.2s;
+    z-index: 19;
+
+    a {
+      width: 100%;
+      height: 35px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 1rem;
+      padding: 0.2rem;
+      border: double 3px #666666be;
+      border-radius: 10px;
+      text-decoration: none;
+      background-color: #66666696;
+      color: #88888896;
+      font-family: "Zekton";
+      transition: 0.2s;
+
+      &:hover {
+        border: solid 3px #ffffff;
+        box-shadow:
+          0 0 0.2rem #fff,
+          0 0 0.2rem #fff,
+          0 0 2rem #fe1313,
+          0 0 0.8rem #fe1313,
+          0 0 2.8rem #fe1313,
+          inset 0 0 1.3rem #fe1313;
+        color: #ffcece;
+      }
+
+      &:first-child {
+        justify-content: center;
+        &:hover {
+          box-shadow:
+            0 0 0.2rem #fff,
+            0 0 0.2rem #fff,
+            0 0 2rem #8113fe,
+            0 0 0.8rem #8113fe,
+            0 0 2.8rem #8113fe,
+            inset 0 0 1.3rem #8113fe;
+          color: #dfc2ff;
+        }
+      }
+      &:nth-child(6) {
+        justify-content: center;
+        &:hover {
+          box-shadow:
+            0 0 0.2rem #fff,
+            0 0 0.2rem #fff,
+            0 0 2rem #8113fe,
+            0 0 0.8rem #8113fe,
+            0 0 2.8rem #8113fe,
+            inset 0 0 1.3rem #8113fe;
+          color: #dfc2ff;
+        }
+      }
+
+      img {
+        width: 29px;
+        height: 29px;
+      }
+    }
+  }
+
+  .hidden {
+    transform: translateX(150%);
+    transition: 0.2s;
+  }
+
+  @media screen and (min-width: 515px) {
+    top: 146px;
+
+    .nav {
+      top: 0;
+      margin-right: 46px;
+      transform: scale(135%);
+    }
+
+    .hidden {
+      transform: translateX(160%) scale(135%);
+      transition: 0.2s;
+    }
+  }
+}
