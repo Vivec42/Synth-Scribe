@@ -5,7 +5,11 @@ import axios from "axios";
 import UserContext from "@contexts/UserContext";
 import LandingPage from "@pages/LandingPage";
 import HomePage from "@pages/HomePage";
+import ThreadPage from "@pages/ThreadPage";
+import Header from "@components/Header/Index";
 import Footer from "@components/Footer/Index";
+import AdminPanel from "@pages/AdminPanel";
+
 import synthBG from "@assets/videos/synth_bg.mp4";
 import "./App.scss";
 import "@assets/fonts/BTTF.ttf";
@@ -41,6 +45,7 @@ function App() {
         value={useMemo(() => ({ user, setUser }), [user, setUser])}
       >
         <BrowserRouter>
+          {user?.id && <Header />}
           <Routes>
             <Route
               path="/login"
@@ -50,10 +55,21 @@ function App() {
               path="/"
               element={!user?.id ? <Navigate to="/login" /> : <HomePage />}
             />
-            {/* {user?.role === "ADMIN" && <Route
-              path="/admin"
-              element={<AdminPage />}
-            />} */}
+            <Route
+              path="/threads/:id"
+              element={!user?.id ? <Navigate to="/login" /> : <ThreadPage />}
+            />
+
+            <Route
+              path="/admin-panel"
+              element={
+                user?.role !== "ADMIN" ? (
+                  <Navigate to="/login" />
+                ) : (
+                  <AdminPanel />
+                )
+              }
+            />
           </Routes>
         </BrowserRouter>
       </UserContext.Provider>

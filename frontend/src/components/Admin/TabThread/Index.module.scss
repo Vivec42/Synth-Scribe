@@ -1,0 +1,154 @@
+.tab_thread {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  font-family: "Zekton";
+  color: #ffffff;
+
+  button {
+    font-family: "Zekton";
+    padding: 1rem;
+    border: double 3px #6e6e6e;
+    border-radius: 10px;
+    font-size: clamp(12px, 4vw, 22px);
+    text-align: center;
+    transition: 0.15s;
+    color: #6e6e6e;
+    background-color: #3d3150;
+    cursor: pointer;
+
+    &.new_thread {
+      margin-bottom: 5rem;
+    }
+
+    &:hover {
+      border: solid 3px #ffffff;
+      box-shadow:
+        0 0 0.2rem #fff,
+        0 0 0.2rem #fff,
+        0 0 2rem #13dbfe,
+        0 0 0.8rem #13dbfe,
+        0 0 2.8rem #13dbfe,
+        inset 0 0 1.3rem #13dbfe;
+      color: #ffffff;
+    }
+  }
+  form {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 2rem;
+
+    label {
+      width: 100%;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      margin-bottom: 1rem;
+
+      p {
+      }
+      input {
+        padding: 0.3rem;
+        background: #342946;
+        color: #6e6e6e;
+        border: solid #6e6e6e;
+        border-radius: 10px;
+        font-size: clamp(12px, 4vw, 24px);
+        font-family: "Zekton";
+        transition: 0.15s;
+
+        &:hover {
+          border: solid #ffffff;
+          box-shadow:
+            0 0 0.2rem #fff,
+            0 0 0.2rem #fff,
+            0 0 2rem #bc13fe,
+            0 0 0.8rem #bc13fe,
+            0 0 2.8rem #bc13fe,
+            inset 0 0 1.3rem #bc13fe;
+        }
+
+        &:focus {
+          color: #13dbfe;
+
+          outline: none;
+        }
+      }
+      textarea {
+        width: 50%;
+        min-width: 240px;
+        resize: none;
+        padding: 0.3rem;
+        background: #342946;
+        color: #6e6e6e;
+        border: solid #6e6e6e;
+        border-radius: 10px;
+        font-size: clamp(12px, 4vw, 24px);
+        font-family: "Zekton";
+        transition: 0.15s;
+
+        &:hover {
+          border: solid #ffffff;
+          box-shadow:
+            0 0 0.2rem #fff,
+            0 0 0.2rem #fff,
+            0 0 2rem #bc13fe,
+            0 0 0.8rem #bc13fe,
+            0 0 2.8rem #bc13fe,
+            inset 0 0 1.3rem #bc13fe;
+        }
+
+        &:focus {
+          color: #13dbfe;
+
+          outline: none;
+        }
+      }
+    }
+  }
+
+  ul {
+    li {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+
+      &:last-child {
+        margin-bottom: 2rem;
+      }
+
+      button {
+        font-family: "Zekton";
+        margin-bottom: 1rem;
+
+        &:nth-child(1) {
+          margin-top: 0.5rem;
+        }
+
+        &:nth-child(2) {
+          &:hover {
+            border: solid 3px #ffffff;
+            box-shadow:
+              0 0 0.2rem #fff,
+              0 0 0.2rem #fff,
+              0 0 2rem #fe1313,
+              0 0 0.8rem #fe1313,
+              0 0 2.8rem #fe1313,
+              inset 0 0 1.3rem #fe1313;
+            color: #ffffff;
+          }
+        }
+      }
+      hr {
+        width: 50%;
+      }
+    }
+  }
+}

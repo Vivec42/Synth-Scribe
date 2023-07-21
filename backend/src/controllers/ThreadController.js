@@ -4,7 +4,7 @@ class ThreadController {
   static browseThreads = async (req, res) => {
     try {
       return await models.thread
-        .findAll()
+        .getAllTitles()
         .then(([threadsList]) => {
           res.status(200).send(threadsList);
         })
@@ -31,9 +31,9 @@ class ThreadController {
       }
 
       return await models.thread
-        .find(req.params.id)
+        .getById(req.params.id)
         .then(([threadsList]) => {
-          res.status(200).send(threadsList);
+          res.status(200).send(threadsList[0]);
         })
         .catch((err) => {
           console.error(err);
@@ -65,7 +65,7 @@ class ThreadController {
       }
 
       return await models.thread
-        .insertThread({ ...thread, user_id: req.userId })
+        .insertThread({ ...thread })
         .then(([result]) => {
           return res
             .location("/threads")
@@ -94,8 +94,8 @@ class ThreadController {
         return res.status(404).send("This thread doesn't exist !");
       }
 
-      return models.thread.updateThread(req.body).then(() => {
-        res.sendStatus(204);
+      return models.thread.updateThread(req.body, req.params.id).then(() => {
+        res.sendStatus(200);
       });
     } catch (err) {
       return res.status(500).send(err.message);

@@ -24,13 +24,13 @@ class UserManager extends AbstractManager {
 
   findAll() {
     return this.connection.query(
-      `SELECT nickname, profilePicture, profileBanner, description, language, country, city, registeredDate, banned FROM  ${this.table}`
+      `SELECT id, nickname, profilePicture, profileBanner, description, language, country, city, registeredDate, banned FROM  ${this.table}`
     );
   }
 
   find(id) {
     return this.connection.query(
-      `SELECT nickname, profilePicture, profileBanner, description, language, country, city, registeredDate, id, role  FROM  ${this.table} WHERE id = ?`,
+      `SELECT id, nickname, profilePicture, profileBanner, description, language, country, city, registeredDate, id, role  FROM  ${this.table} WHERE id = ?`,
       [id]
     );
   }
