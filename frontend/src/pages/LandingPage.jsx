@@ -1,4 +1,4 @@
-import { useReducer, useContext, useState, useEffect } from "react";
+import { useReducer, useContext, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import UserContext from "@contexts/UserContext";
 import CreateAccount from "@components/CreateAccount/Index";
@@ -33,26 +33,9 @@ const loginForm = (state, action) => {
 
 function LandingPage() {
   const [registering, setRegistering] = useState(false);
-  const [actualClass, setActualClass] = useState("visible");
   const [formData, dispatch] = useReducer(loginForm, loginInitialState);
   const { setUser } = useContext(UserContext);
   const navigate = useNavigate();
-
-  const toggleForms = async () => {
-    if (registering) {
-      setActualClass("visible");
-      setRegistering(false);
-    } else {
-      setActualClass("hidden");
-      setRegistering(true);
-    }
-  };
-
-  useEffect(() => {
-    if (!registering) {
-      setActualClass("visible");
-    }
-  }, [registering]);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -103,7 +86,9 @@ function LandingPage() {
         registering={registering}
         setRegistering={setRegistering}
       />
-      <span className={`${style.box} ${style[actualClass]}`}>
+      <span
+        className={`${style.box} ${style[registering ? "hidden" : "visible"]}`}
+      >
         <form className={style.form_login} onSubmit={handleSubmit}>
           <input
             type="text"
@@ -129,7 +114,7 @@ function LandingPage() {
           <hr />
           <span>
             <p>No account ?</p>
-            <button type="button" onClick={toggleForms}>
+            <button type="button" onClick={() => setRegistering(!registering)}>
               Create one here !
             </button>
           </span>

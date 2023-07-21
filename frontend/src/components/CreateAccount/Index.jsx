@@ -1,4 +1,4 @@
-import { useReducer, useContext, useState, useEffect } from "react";
+import { useReducer, useContext } from "react";
 import { useNavigate } from "react-router-dom";
 import UserContext from "@contexts/UserContext";
 import axios from "@services/axios";
@@ -26,30 +26,12 @@ const createAccountForm = (state, action) => {
 };
 
 function CreateAccount({ registering, setRegistering }) {
-  const [actualClass, setActualClass] = useState("hidden");
   const [formData, dispatch] = useReducer(
     createAccountForm,
     registerInitialState
   );
   const { setUser } = useContext(UserContext);
   const navigate = useNavigate();
-
-  const toggleForms = () => {
-    if (!registering) {
-      setActualClass("visible");
-      setRegistering(true);
-    } else {
-      setActualClass("hidden");
-      setRegistering(false);
-    }
-    // await setRegistering(registering);
-  };
-
-  useEffect(() => {
-    if (registering) {
-      setActualClass("visible");
-    }
-  }, [registering]);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -72,7 +54,7 @@ function CreateAccount({ registering, setRegistering }) {
           alert("Error to create your account, please try again!!!");
         });
 
-      setUser(createUserData[0]);
+      setUser(createUserData);
       dispatch({ type: "RESET_FORM" });
       return navigate("/login");
     } catch (err) {
@@ -87,7 +69,9 @@ function CreateAccount({ registering, setRegistering }) {
   };
 
   return (
-    <span className={`${style.box} ${style[actualClass]}`}>
+    <span
+      className={`${style.box} ${style[registering ? "visible" : "hidden"]}`}
+    >
       <form className={style.form_create_account} onSubmit={handleSubmit}>
         <input
           type="text"
@@ -122,7 +106,7 @@ function CreateAccount({ registering, setRegistering }) {
         <hr />
         <span>
           <button type="submit">Create</button>
-          <button type="button" onClick={toggleForms}>
+          <button type="button" onClick={() => setRegistering(!registering)}>
             Cancel
           </button>
         </span>

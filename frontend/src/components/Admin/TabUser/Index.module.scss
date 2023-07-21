@@ -1,0 +1,50 @@
+.tab_user {
+  ul {
+    li {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      font-family: "Zekton";
+      color: #c3f6ff;
+      text-shadow:
+        0 0 4px #fff,
+        0 0 11px #fff,
+        0 0 19px #fff,
+        0 0 40px #13dbfe;
+
+      &:last-child {
+        margin: 2rem;
+      }
+
+      button {
+        margin: 1rem 0;
+        padding: 1rem;
+        border: double 3px #6e6e6e;
+        border-radius: 10px;
+        font-size: clamp(12px, 4vw, 22px);
+        text-align: center;
+        color: #6e6e6e;
+        background-color: #3d3150;
+        transition: 0.15s;
+        cursor: pointer;
+
+        &:hover {
+          border: solid 3px #ffffff;
+          box-shadow:
+            0 0 0.2rem #fff,
+            0 0 0.2rem #fff,
+            0 0 2rem #fe1313,
+            0 0 0.8rem #fe1313,
+            0 0 2.8rem #fe1313,
+            inset 0 0 1.3rem #fe1313;
+          color: #ffffff;
+        }
+      }
+
+      hr {
+        width: 50%;
+      }
+    }
+  }
+}

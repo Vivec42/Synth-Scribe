@@ -1,6 +1,7 @@
 .nav_box {
   position: fixed;
   width: 100%;
+  z-index: 19;
 
   .nav {
     position: absolute;
@@ -69,7 +70,22 @@
           color: #dfc2ff;
         }
       }
-      &:nth-child(6) {
+
+      &:nth-child(2) {
+        justify-content: center;
+        &:hover {
+          box-shadow:
+            0 0 0.2rem #fff,
+            0 0 0.2rem #fff,
+            0 0 2rem #8113fe,
+            0 0 0.8rem #8113fe,
+            0 0 2.8rem #8113fe,
+            inset 0 0 1.3rem #8113fe;
+          color: #dfc2ff;
+        }
+      }
+
+      &:nth-child(7) {
         justify-content: center;
         &:hover {
           box-shadow:

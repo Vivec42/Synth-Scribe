@@ -1,4 +1,5 @@
 import { useState, useEffect } from "react";
+import { useLocation } from "react-router-dom";
 import NavMenu from "@components/NavMenu/Index";
 
 import WIP from "@assets/images/Logo-WIP.png";
@@ -10,6 +11,7 @@ function Header() {
   const [actualId1, setActualId1] = useState("off");
   const [actualId2, setActualId2] = useState("off");
   const [actualId3, setActualId3] = useState("off");
+  const { pathname } = useLocation();
 
   const toggleBurger = () => {
     if (burger) {
@@ -36,6 +38,20 @@ function Header() {
     }
   }, [burger]);
 
+  const handlePageName = () => {
+    switch (true) {
+      case pathname === "/":
+        return "Home";
+      case pathname.includes("threads/"):
+        return "Thread";
+      case pathname === "/admin-panel":
+        return "Admin";
+
+      default:
+        return "";
+    }
+  };
+
   return (
     <>
       <header className={style.header}>
@@ -43,7 +59,7 @@ function Header() {
           <img src={WIP} alt="Synth-Scribe_Logo" />
           <img src={WIP} alt="Profile_Picture" />
         </section>
-        <h1>Home</h1>
+        <h1>{handlePageName()}</h1>
         <section className={style.burger_menu}>
           <button type="button" onClick={toggleBurger}>
             <span className={style[actualClass]}>

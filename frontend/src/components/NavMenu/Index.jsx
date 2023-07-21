@@ -33,7 +33,10 @@ function NavMenu({ burger, setBurger }) {
   return (
     <span className={style.nav_box}>
       <nav className={`${style.nav} ${style[actualClass]}`}>
-        <Link to="/threads" onClick={toggleNavMenu}>
+        <Link to="/" onClick={toggleNavMenu}>
+          Home
+        </Link>
+        <Link to="/threads/1" onClick={toggleNavMenu}>
           Threads
         </Link>
         <Link to="/chat" onClick={toggleNavMenu}>
