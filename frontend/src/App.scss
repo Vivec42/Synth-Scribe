@@ -6,7 +6,7 @@
 
 .App {
   .synth-bg {
-    position: absolute;
+    position: fixed;
     top: 0;
     left: 0;
     width: 100%;
@@ -14,10 +14,6 @@
     object-fit: cover;
     z-index: -1;
   }
-}
-
-.vivaldi-picture-in-picture-container {
-  display: none;
 }
 
 @font-face {
