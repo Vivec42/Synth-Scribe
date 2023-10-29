@@ -45,7 +45,6 @@ class UserController {
           res.sendStatus(500);
         });
     } catch (err) {
-      //prod.liveshare.vsengsaas.visualstudio.com/join?03F645A657813B2D4CB88FF1EA9B48A59465
       return res.status(500).send(err.message);
     }
   };
