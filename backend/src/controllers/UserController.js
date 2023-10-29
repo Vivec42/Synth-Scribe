@@ -53,19 +53,6 @@ class UserController {
   /*-------------------------------------------------------- */
 
   static findUser = async (req, res) => {
-    // const { role } = req.body;
-
-    // const checkUserExistence = await models.user
-    //   .find(req.params.id, role)
-    //   .then((result) => result[0]);
-
-    // if (!checkUserExistence) {
-    //   return res.status(403).send("Register to access this !");
-    // }
-    // if (!checkUserExistence.length) {
-    //   return res.status(404).send("This user doesn't exist !");
-    // }
-
     try {
       return await models.user
         .find(req.params.id)
