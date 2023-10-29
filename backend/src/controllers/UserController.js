@@ -34,23 +34,6 @@ const checkUserExists = async (id) => {
 
 class UserController {
   static browseUsers = async (req, res) => {
-    // const { id, role } = req.body;
-
-    // const checkUserExistence = await models.user
-    //   .find(id, role)
-    //   .then((result) => result[0]);
-
-    // const isBanned = await models.user
-    //   .isUserBanned()
-    //   .then((result) => result[0]);
-
-    // if (checkUserExistence) {
-    //   return res.status(403).send("Register to access this !");
-    // }
-    // if (isBanned) {
-    //   return res.status(403).send("You are banned from this site !");
-    // }
-
     try {
       return await models.user
         .findAll()
